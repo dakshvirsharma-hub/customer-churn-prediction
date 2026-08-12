@@ -122,6 +122,10 @@ streamlit run app.py
 * Model monitoring
 * Automated retraining
 
+## 📸 Application Screenshot
+
+![Customer Churn Prediction](churn.png)
+
 ## 👨‍💻 Author
 
 **Dakshvir Sharma**
