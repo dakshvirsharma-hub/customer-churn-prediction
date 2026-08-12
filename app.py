@@ -29,6 +29,20 @@ ohe = joblib.load("onehot_encoder.pkl")
 st.title("Customer Churn Prediction")
 st.write("Enter customer details to predict churn probability.")
 
+col1, col2 = st.columns([2, 1])
+
+with col1:
+    st.title("Customer Churn Prediction")
+    st.write("Enter customer details to predict churn probability.")
+
+with col2:
+    st.markdown("### 🤖 Model Information")
+    st.write("**Algorithm:** Logistic Regression")
+    st.write("**Penalty:** L2")
+    st.write("**Solver:** liblinear")
+    st.write("**CV:** 5-Fold")
+    st.write("**Optimization:** F1 Score")
+    st.write("**Test F1:** 0.6343")
 # Customer Profile
 st.header("Customer Profile")
 
@@ -251,3 +265,32 @@ if st.button("Predict Churn"):
 
     else:
         st.success("🟢 Low Risk — Customer is unlikely to churn.")
+
+    # -----------------------------
+    # Key Factors
+    # -----------------------------
+
+    st.write("### 🔎 Key Factors")
+
+    coefficients = model.coef_[0]
+
+    contributions = final_data[0] * coefficients
+
+    factor_df = pd.DataFrame({
+        "Feature": columns,
+        "Contribution": contributions
+    })
+
+    risk_factors = factor_df[
+        factor_df["Contribution"] > 0
+    ]
+
+    risk_factors = risk_factors.sort_values(
+        by="Contribution",
+        ascending=False
+    )
+
+    top_factors = risk_factors.head(3)
+
+    for _, row in top_factors.iterrows():
+        st.write(f"🔴 {row['Feature']}")
