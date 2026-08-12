@@ -241,7 +241,7 @@ if st.button("Predict Churn"):
     # Prediction
     # -----------------------------
 
-prediction = model.predict(final_data)[0]
+
 probability = model.predict_proba(final_data)[0][1]
 
 st.write(f"Churn Probability: {probability:.2%}")
