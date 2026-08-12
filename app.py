@@ -2,54 +2,28 @@ import streamlit as st
 import pandas as pd
 import joblib
 
-
-# -----------------------------
 # Load saved files
-# -----------------------------
 model = joblib.load("churn_model.pkl")
 scaler = joblib.load("scaler.pkl")
 label_encoders = joblib.load("label_encoders.pkl")
 ohe = joblib.load("onehot_encoder.pkl")
 
-
-# -----------------------------
 # Page
-# -----------------------------
 st.title("Customer Churn Prediction")
-st.write("Enter customer details to predict whether the customer will churn.")
+st.write("Enter customer details to predict churn probability.")
 
-
-# -----------------------------
-# User Inputs
-# -----------------------------
+# Customer Profile
+st.header("Customer Profile")
 
 gender = st.selectbox("Gender", ["Male", "Female"])
 senior_citizen = st.selectbox("Senior Citizen", ["Yes", "No"])
-
 partner = st.selectbox("Partner", ["Yes", "No"])
-
 dependents = st.selectbox("Dependents", ["Yes", "No"])
 
-tenure = st.number_input("Tenure Months", min_value=0, max_value=100, value=1)
+# Services
+st.header("Services")
 
 phone_service = st.selectbox("Phone Service", ["Yes", "No"])
-
-paperless_billing = st.selectbox(
-    "Paperless Billing",
-    ["Yes", "No"]
-)
-
-monthly_charges = st.number_input(
-    "Monthly Charges",
-    min_value=0.0,
-    value=50.0
-)
-
-total_charges = st.number_input(
-    "Total Charges",
-    min_value=0.0,
-    value=50.0
-)
 
 multiple_lines = st.selectbox(
     "Multiple Lines",
@@ -91,6 +65,33 @@ streaming_movies = st.selectbox(
     ["Yes", "No", "No internet service"]
 )
 
+# Billing
+st.header("Billing & Contract")
+
+tenure = st.number_input(
+    "Tenure Months",
+    min_value=0,
+    max_value=100,
+    value=1
+)
+
+paperless_billing = st.selectbox(
+    "Paperless Billing",
+    ["Yes", "No"]
+)
+
+monthly_charges = st.number_input(
+    "Monthly Charges",
+    min_value=0.0,
+    value=50.0
+)
+
+total_charges = st.number_input(
+    "Total Charges",
+    min_value=0.0,
+    value=50.0
+)
+
 contract = st.selectbox(
     "Contract",
     ["Month-to-month", "One year", "Two year"]
@@ -106,11 +107,7 @@ payment_method = st.selectbox(
     ]
 )
 
-
-# -----------------------------
 # Prediction
-# -----------------------------
-
 if st.button("Predict Churn"):
 
     # Raw input
@@ -136,11 +133,7 @@ if st.button("Predict Churn"):
         "Payment Method": [payment_method]
     })
 
-
-    # -----------------------------
     # Label Encoding
-    # -----------------------------
-
     label_columns = [
         "Gender",
         "Senior Citizen",
@@ -151,13 +144,11 @@ if st.button("Predict Churn"):
     ]
 
     for col in label_columns:
-        input_data[col] = label_encoders[col].transform(input_data[col])
+        input_data[col] = label_encoders[col].transform(
+            input_data[col]
+        )
 
-
-    # -----------------------------
     # One Hot Encoding
-    # -----------------------------
-
     multi_columns = [
         "Multiple Lines",
         "Internet Service",
@@ -178,22 +169,16 @@ if st.button("Predict Churn"):
         columns=ohe.get_feature_names_out(multi_columns)
     )
 
+    input_data = input_data.drop(
+        columns=multi_columns
+    )
 
-    # Remove original categorical columns
-    input_data = input_data.drop(columns=multi_columns)
-
-
-    # Combine
     final_data = pd.concat(
         [input_data, encoded_df],
         axis=1
     )
-    
 
-    # -----------------------------
-    # Exact model column order
-    # -----------------------------
-
+    # Model column order
     columns = [
         "Gender",
         "Senior Citizen",
@@ -229,26 +214,23 @@ if st.button("Predict Churn"):
 
     final_data = final_data[columns]
 
-
-    # -----------------------------
     # Scaling
-    # -----------------------------
-
     final_data = scaler.transform(final_data)
 
-
-    # -----------------------------
     # Prediction
-    # -----------------------------
+    prediction = model.predict(final_data)[0]
 
+    # Probability
+    probability = model.predict_proba(final_data)[0][1]
 
-probability = model.predict_proba(final_data)[0][1]
+    st.write(f"### Churn Probability: {probability:.2%}")
 
-st.write(f"Churn Probability: {probability:.2%}")
+    # Risk Level
+    if probability >= 0.70:
+        st.error("🔴 High Risk — Customer is likely to churn.")
 
-if probability >= 0.70:
-    st.error("🔴 High Risk — Customer is likely to churn.")
-elif probability >= 0.40:
-    st.warning("🟡 Medium Risk — Customer may churn.")
-else:
-    st.success("🟢 Low Risk — Customer is unlikely to churn.")
+    elif probability >= 0.40:
+        st.warning("🟡 Medium Risk — Customer may churn.")
+
+    else:
+        st.success("🟢 Low Risk — Customer is unlikely to churn.")
