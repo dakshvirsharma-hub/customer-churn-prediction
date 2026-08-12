@@ -241,10 +241,14 @@ if st.button("Predict Churn"):
     # Prediction
     # -----------------------------
 
-    prediction = model.predict(final_data)[0]
+prediction = model.predict(final_data)[0]
+probability = model.predict_proba(final_data)[0][1]
 
+st.write(f"Churn Probability: {probability:.2%}")
 
-    if prediction == 1:
-        st.error("Customer is likely to churn.")
-    else:
-        st.success("Customer is unlikely to churn.")
+if probability >= 0.70:
+    st.error("🔴 High Risk — Customer is likely to churn.")
+elif probability >= 0.40:
+    st.warning("🟡 Medium Risk — Customer may churn.")
+else:
+    st.success("🟢 Low Risk — Customer is unlikely to churn.")
