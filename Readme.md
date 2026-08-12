@@ -1,237 +1,129 @@
-<<<<<<< HEAD
 # Customer Churn Prediction
 
-This is a machine learning project where I built a model to predict whether a customer is likely to churn.
+A Machine Learning project that predicts whether a customer is likely to churn.
 
-I worked with a Telco customer churn dataset and went through the complete process from data cleaning and EDA to model training, evaluation, tuning, and deployment using Streamlit.
+The project includes data cleaning, EDA, preprocessing, model training, model tuning, evaluation, and Streamlit deployment.
 
-## Project Overview
+## 🚀 Live Demo
 
-The main goal of this project was to understand which customer-related factors are associated with churn and build a classification model that can predict customer churn.
+**Streamlit:**
+https://customer-churn-prediction-by-daksh.streamlit.app
 
-The dataset contains information about customer services, contract details, payment methods, tenure, monthly charges, and other customer information.
+**GitHub:**
+https://github.com/dakshvirsharma-hub/customer-churn-prediction
 
-## Dataset
+## 🎯 What This Project Does
 
-The dataset contains customer information such as:
+The app can:
 
-- Gender
-- Senior Citizen
-- Partner
-- Dependents
-- Tenure Months
-- Phone Service
-- Multiple Lines
-- Internet Service
-- Online Security
-- Online Backup
-- Device Protection
-- Tech Support
-- Streaming TV
-- Streaming Movies
-- Contract
-- Payment Method
-- Monthly Charges
-- Total Charges
+* Predict churn probability.
+* Show Low, Medium, and High risk.
+* Show key factors behind the prediction.
+* Suggest actions for high-risk customers.
+* Show model information.
 
-The target variable is:
+## 📊 Dataset
 
-`Churn Value`
+I used a Telco Customer Churn dataset.
 
-## What I Did
+The data contains information about:
 
-### 1. Data Cleaning
+* Customer details
+* Services
+* Contract
+* Payment method
+* Monthly charges
+* Total charges
+* Tenure
 
-First, I explored the dataset and checked its structure, data types, and missing values.
+Target: `Churn Value`
 
-I handled missing values in the `Churn Reason` column and converted `Total Charges` into a numeric column.
-
-There were also some columns that were not useful for the model, such as customer location information and customer identifiers, so I removed them.
-
-### 2. Exploratory Data Analysis
-
-I performed EDA to understand the relationship between customer features and churn.
+## 🧹 Data Preprocessing
 
 I used:
 
-- Bar plots
-- Box plots
-- Correlation heatmap
-- Pearson correlation
+* Label Encoding
+* One-Hot Encoding
+* StandardScaler
+* Feature selection
+* Train/Test Split
 
-I also looked at how different categorical features were distributed with respect to churn.
+The final dataset contains **30 features**.
 
-### 3. Feature Preprocessing
+## 🤖 Machine Learning
 
-I used different preprocessing techniques depending on the type of feature.
+I tested:
 
-For binary categorical columns, I used `LabelEncoder`.
+* Logistic Regression
+* Random Forest
+* KNN
+* SVM
+* Decision Tree
+* Naive Bayes
 
-For categorical columns with multiple values, I used `OneHotEncoder`.
+The final model is **Logistic Regression**.
 
-For numerical features, I used `StandardScaler`.
+### Hyperparameter Tuning
 
-The final dataset contained 30 features that were used for model training.
+I used `GridSearchCV` with **5-Fold Cross-Validation**.
 
-### 4. Model Training
-
-I tested several classification algorithms:
-
-- Logistic Regression
-- Random Forest
-- K-Nearest Neighbors
-- Support Vector Machine
-- Decision Tree
-- Naive Bayes
-
-I compared the models using:
-
-- Accuracy
-- Precision
-- Recall
-- F1 Score
-
-### 5. Hyperparameter Tuning
-
-After comparing the models, I tuned Logistic Regression using `GridSearchCV` with 5-fold cross-validation.
-
-I used F1 score as the scoring metric because I wanted to consider both precision and recall rather than relying only on accuracy.
-
-The final model used in the application is the tuned Logistic Regression model.
-
-## Machine Learning Pipeline
-
-The overall process was:
+Best parameters:
 
 ```text
-Raw Dataset
-     ↓
-Data Cleaning
-     ↓
-EDA
-     ↓
-Feature Selection
-     ↓
-Label Encoding
-     ↓
-One-Hot Encoding
-     ↓
-Train/Test Split
-     ↓
-Feature Scaling
-     ↓
-Model Training
-     ↓
-Model Evaluation
-     ↓
-GridSearchCV
-     ↓
-Final Model
-     ↓
-Streamlit Deployment
-=======
-# Customer Churn Prediction
+Penalty: L2
+Solver: liblinear
+```
 
-This is a machine learning project where I built a model to predict whether a customer is likely to churn.
+## 📈 Model Performance
 
-I worked with a Telco customer churn dataset and went through the complete process from data cleaning and EDA to model training, evaluation, tuning, and deployment using Streamlit.
+| Metric       |  Score |
+| ------------ | -----: |
+| Accuracy     | 80.90% |
+| Precision    | 67.37% |
+| Recall       | 59.91% |
+| F1 Score     | 63.43% |
+| 5-Fold CV F1 | ~60.8% |
 
-## Project Overview
+## 🔎 Churn Risk
 
-The main goal of this project was to understand which customer-related factors are associated with churn and build a classification model that can predict customer churn.
+The app shows:
 
-The dataset contains information about customer services, contract details, payment methods, tenure, monthly charges, and other customer information.
+```text
+< 40%       → Low Risk
+40–69.99%   → Medium Risk
+≥ 70%       → High Risk
+```
 
-## Dataset
+It also shows the main factors affecting the prediction and gives simple recommended actions.
 
-The dataset contains customer information such as:
+## 🛠️ Tech Stack
 
-- Gender
-- Senior Citizen
-- Partner
-- Dependents
-- Tenure Months
-- Phone Service
-- Multiple Lines
-- Internet Service
-- Online Security
-- Online Backup
-- Device Protection
-- Tech Support
-- Streaming TV
-- Streaming Movies
-- Contract
-- Payment Method
-- Monthly Charges
-- Total Charges
+Python → Pandas → NumPy → Scikit-learn → Matplotlib
+→ Seaborn → Streamlit → Joblib → Git & GitHub
 
-The target variable is:
+## 🔄 ML Pipeline
 
-Churn Value
+Data → Cleaning → EDA → Preprocessing → Model Training → Evaluation
+→ GridSearchCV → Final Model → Churn Probability → Risk Level → Business Recommendation
 
-## What I Did
+## ▶️ Run Locally
 
-### 1. Data Cleaning
+```bash
+git clone https://github.com/dakshvirsharma-hub/customer-churn-prediction.git
+cd customer-churn-prediction
+pip install -r requirements.txt
+streamlit run app.py
+```
 
-First, I explored the dataset and checked its structure, data types, and missing values.
+## 🔮 Future Improvements
 
-I handled missing values in the Churn Reason column and converted Total Charges into a numeric column.
+* SHAP explanations
+* Better probability calibration
+* Model monitoring
+* Automated retraining
 
-There were also some columns that were not useful for the model, such as customer location information and customer identifiers, so I removed them.
+## 👨‍💻 Author
 
-### 2. Exploratory Data Analysis
+**Dakshvir Sharma**
 
-I performed EDA to understand the relationship between customer features and churn.
-
-I used:
-
-- Bar plots
-- Box plots
-- Correlation heatmap
-- Pearson correlation
-
-I also looked at how different categorical features were distributed with respect to churn.
-
-### 3. Feature Preprocessing
-
-I used different preprocessing techniques depending on the type of feature.
-
-For binary categorical columns, I used LabelEncoder
-
-For categorical columns with multiple values, I used OneHotEncoder
-
-For numerical features, I used StandardScaler.
-
-The final dataset contained 30 features that were used for model training.
-
-### 4. Model Training
-
-I tested several classification algorithms:
-
-- Logistic Regression
-- Random Forest
-- K-Nearest Neighbors
-- Support Vector Machine
-- Decision Tree
-- Naive Bayes
-
-I compared the models using:
-
-- Accuracy
-- Precision
-- Recall
-- F1 Score
-
-### 5. Hyperparameter Tuning
-
-After comparing the models, I tuned Logistic Regression using `GridSearchCV` with 5-fold cross-validation.
-
-I used F1 score as the scoring metric because I wanted to consider both precision and recall rather than relying only on accuracy.
-
-The final model used in the application is the tuned Logistic Regression model.
-
-## Machine Learning Pipeline
-
-The overall process was:
-Raw Dataset → Data Cleaning → EDA → Feature Selection → Label Encoding → One-Hot Encoding → Train/Test Split → Feature Scaling → Model Training → Model Evaluation → GridSearchCV → Final Model → Streamlit Deployment
->>>>>>> d411a24d509df298aab684ac06bca287361c478f
+Data Science & Machine Learning Project.
