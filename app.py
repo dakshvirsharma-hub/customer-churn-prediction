@@ -1,7 +1,24 @@
 import streamlit as st
 import pandas as pd
 import joblib
+import base64
 
+with open("background.jpg", "rb") as f:
+    encoded = base64.b64encode(f.read()).decode()
+
+st.markdown(
+    f"""
+    <style>
+    .stApp {{
+        background-image: url("data:image/jpeg;base64,{encoded}");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }}
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 # Load saved files
 model = joblib.load("churn_model.pkl")
 scaler = joblib.load("scaler.pkl")
