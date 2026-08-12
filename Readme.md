@@ -1,58 +1,23 @@
 # Customer Churn Prediction
 
-A Machine Learning project that predicts whether a customer is likely to churn.
-
-The project includes data cleaning, EDA, preprocessing, model training, model tuning, evaluation, and Streamlit deployment.
+A Machine Learning project that predicts customer churn probability and assigns a **Low, Medium, or High risk level**.
 
 ## 🚀 Live Demo
 
-**Streamlit:**
-https://customer-churn-prediction-by-daksh.streamlit.app
-
-**GitHub:**
-https://github.com/dakshvirsharma-hub/customer-churn-prediction
-
-## 🎯 What This Project Does
-
-The app can:
-
-* Predict churn probability.
-* Show Low, Medium, and High risk.
-* Show key factors behind the prediction.
-* Suggest actions for high-risk customers.
-* Show model information.
+**Streamlit:** https://customer-churn-prediction-by-daksh.streamlit.app
+**GitHub:** https://github.com/dakshvirsharma-hub/customer-churn-prediction
 
 ## 📊 Dataset
 
-I used a Telco Customer Churn dataset.
+**Telco Customer Churn Dataset**
 
-The data contains information about:
+Features include customer details, services, contract type, payment method, monthly charges, total charges, and tenure.
 
-* Customer details
-* Services
-* Contract
-* Payment method
-* Monthly charges
-* Total charges
-* Tenure
-
-Target: `Churn Value`
-
-## 🧹 Data Preprocessing
-
-I used:
-
-* Label Encoding
-* One-Hot Encoding
-* StandardScaler
-* Feature selection
-* Train/Test Split
-
-The final dataset contains **30 features**.
+**Target:** `Churn Value`
 
 ## 🤖 Machine Learning
 
-I tested:
+Models tested:
 
 * Logistic Regression
 * Random Forest
@@ -61,73 +26,51 @@ I tested:
 * Decision Tree
 * Naive Bayes
 
-The final model is **Logistic Regression**.
+**Final Model:** Logistic Regression
 
-### Hyperparameter Tuning
+**Hyperparameter Tuning:** `GridSearchCV` with 5-Fold Cross-Validation
 
-I used `GridSearchCV` with **5-Fold Cross-Validation**.
+### Performance
 
-Best parameters:
+| Metric    |      Score |
+| --------- | ---------: |
+| Accuracy  | **80.90%** |
+| Precision | **67.19%** |
+| Recall    | **60.06%** |
+| F1 Score  | **63.43%** |
 
-```text
-Penalty: L2
-Solver: liblinear
-```
+## 🧹 Preprocessing
 
-## 📈 Model Performance
+* Label Encoding
+* One-Hot Encoding
+* StandardScaler
+* Feature Selection
+* Train/Test Split
 
-| Metric       |  Score |
-| ------------ | -----: |
-| Accuracy     | 80.90% |
-| Precision    | 67.37% |
-| Recall       | 59.91% |
-| F1 Score     | 63.43% |
-| 5-Fold CV F1 | ~60.8% |
-
-## 🔎 Churn Risk
-
-The app shows:
+## 🔄 Pipeline
 
 ```text
-< 40%       → Low Risk
-40–69.99%   → Medium Risk
-≥ 70%       → High Risk
+Data → Cleaning → EDA → Preprocessing
+→ Model Training → GridSearchCV → Evaluation
+→ Churn Probability → Risk Level
 ```
-
-It also shows the main factors affecting the prediction and gives simple recommended actions.
 
 ## 🛠️ Tech Stack
 
-Python → Pandas → NumPy → Scikit-learn → Matplotlib
-→ Seaborn → Streamlit → Joblib → Git & GitHub
+**Python · Pandas · NumPy · Scikit-learn · Matplotlib · Seaborn · Streamlit · Joblib · Git**
 
-## 🔄 ML Pipeline
+## 📸 Application
 
-Data → Cleaning → EDA → Preprocessing → Model Training → Evaluation
-→ GridSearchCV → Final Model → Churn Probability → Risk Level → Business Recommendation
-
-## ▶️ Run Locally
-
-```bash
-git clone https://github.com/dakshvirsharma-hub/customer-churn-prediction.git
-cd customer-churn-prediction
-pip install -r requirements.txt
-streamlit run app.py
-```
+![Customer Churn Prediction](churn.png)
 
 ## 🔮 Future Improvements
 
 * SHAP explanations
-* Better probability calibration
+* Probability calibration
 * Model monitoring
 * Automated retraining
-
-## 📸 Application Screenshot
-
-![Customer Churn Prediction](churn.png)
 
 ## 👨‍💻 Author
 
 **Dakshvir Sharma**
-
-Data Science & Machine Learning Project.
+Data Science & Machine Learning
