@@ -63,12 +63,7 @@ Data → Cleaning → EDA → Preprocessing
 
 ![Customer Churn Prediction](churn.png)
 
-## 🔮 Future Improvements
 
-* SHAP explanations
-* Probability calibration
-* Model monitoring
-* Automated retraining
 
 ## 👨‍💻 Author
 
